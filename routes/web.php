@@ -21,6 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     // Route::resources('tasks' , TaskController::class);
+    Route::get('/archived-tasks', [TaskController::class, 'archived'])->name('tasks.archived');
     Route::get('/tasks', [TaskController::class,'index'])->name('tasks.index');
     Route::get('/tasks/create',[TaskController::class,'create'])->name('tasks.create');
     Route::post('/tasks',[TaskController::class,'store'])->name('tasks.store');
@@ -28,7 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
     Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
     Route::delete('/tasks/{task}/force', [TaskController::class, 'forceDelete'])->name('tasks.forceDelete');
-    Route::get('/archived-tasks', [TaskController::class, 'archived'])->name('tasks.archived');
+    Route::patch('/tasks/{id}/restore', [TaskController::class, 'restore'])->name('tasks.restore');
 });
 
 require __DIR__.'/auth.php';

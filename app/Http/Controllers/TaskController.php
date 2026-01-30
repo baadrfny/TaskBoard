@@ -77,7 +77,13 @@ class TaskController extends Controller
 
     public function archived()
     {
-        $archivedTasks = Task::onlyTrashed()->where('user_id', Auth::id())->get();
-        dd($archivedTasks); // This will show you all archived tasks
+        $tasks = Task::onlyTrashed()->where('user_id', Auth::id())->get();
+        return view('tasks.archived', compact('tasks'));
+    }
+
+    public function restore($id)
+    {
+        Task::onlyTrashed()->findOrFail($id)->restore();
+        return redirect()->route('tasks.archived')->with('success', 'Tâche restaurée!');
     }
 }
