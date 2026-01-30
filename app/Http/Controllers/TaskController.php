@@ -65,8 +65,19 @@ class TaskController extends Controller
 
     public function destroy(Task $task)
     {
-        
-        $task->delete();
-        return redirect()->route('tasks.index')->with('success', 'Tâche supprimée!');
+        $task->delete(); // Soft delete (archive)
+        return redirect()->route('tasks.index')->with('success', 'Tâche archivée!');
+    }
+
+    public function forceDelete(Task $task)
+    {
+        $task->forceDelete(); // Hard delete (permanent)
+        return redirect()->route('tasks.index')->with('success', 'Tâche supprimée définitivement!');
+    }
+
+    public function archived()
+    {
+        $archivedTasks = Task::onlyTrashed()->where('user_id', Auth::id())->get();
+        dd($archivedTasks); // This will show you all archived tasks
     }
 }
