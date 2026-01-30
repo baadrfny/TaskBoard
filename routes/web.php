@@ -31,5 +31,4 @@ Route::middleware('auth')->group(function () {
     Route::get('/archived-tasks', [TaskController::class, 'archived'])->name('tasks.archived');
 });
 
-
 require __DIR__.'/auth.php';
